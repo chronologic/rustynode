@@ -1,0 +1,1 @@
+[{"constant":true,"inputs":[],"name":"checkValid","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_valid","type":"bool"}],"name":"setValid","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}]

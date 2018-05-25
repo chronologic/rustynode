@@ -1,0 +1,872 @@
+{
+  "contractName": "EventEmitter",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "newTransaction",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "serializedBytes",
+          "type": "bytes"
+        },
+        {
+          "indexed": true,
+          "name": "scheduledBy",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "scheduledFrom",
+          "type": "address"
+        }
+      ],
+      "name": "NewTransactionScheduled",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_newTransaction",
+          "type": "address"
+        },
+        {
+          "name": "_serializedBytes",
+          "type": "bytes"
+        },
+        {
+          "name": "_scheduledBy",
+          "type": "address"
+        }
+      ],
+      "name": "logNewTransactionScheduled",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x6060604052341561000f57600080fd5b6102108061001e6000396000f300606060405260043610610041576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063eb0d633014610046575b600080fd5b341561005157600080fd5b6100df600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509190803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506100e1565b005b3373ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff167f94c6f2d01cc82df9dceeabfd7786c57a01cd9796e7cab146d2d0cf5c8380310d8585604051808373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200180602001828103825283818151815260200191508051906020019080838360005b838110156101a4578082015181840152602081019050610189565b50505050905090810190601f1680156101d15780820380516001836020036101000a031916815260200191505b50935050505060405180910390a35050505600a165627a7a72305820cc3144cee7b4e44e2bf9f9ab879cadb68d258fb9ec40e97339a48114a156ca4b0029",
+  "deployedBytecode": "0x606060405260043610610041576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063eb0d633014610046575b600080fd5b341561005157600080fd5b6100df600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509190803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506100e1565b005b3373ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff167f94c6f2d01cc82df9dceeabfd7786c57a01cd9796e7cab146d2d0cf5c8380310d8585604051808373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200180602001828103825283818151815260200191508051906020019080838360005b838110156101a4578082015181840152602081019050610189565b50505050905090810190601f1680156101d15780820380516001836020036101000a031916815260200191505b50935050505060405180910390a35050505600a165627a7a72305820cc3144cee7b4e44e2bf9f9ab879cadb68d258fb9ec40e97339a48114a156ca4b0029",
+  "sourceMap": "26:1497:15:-;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "26:1497:15:-;;;;;;;;;;;;;;;;;;;;;;;;537:440;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;959:10;886:84;;945:12;886:84;;;910:15;927:16;886:84;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;23:1:-1;8:100;33:3;30:1;27:10;8:100;;;99:1;94:3;90:11;84:18;80:1;75:3;71:11;64:39;52:2;49:1;45:10;40:15;;8:100;;;12:14;886:84:15;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;537:440;;;:::o",
+  "source": "pragma solidity ^0.4.19;\n\ncontract EventEmitter {\n    event NewTransactionScheduled(address newTransaction, bytes serializedBytes, address indexed scheduledBy, address indexed scheduledFrom);\n    // event Parameters(\n    //     bytes2 temporalUnit,\n    //     address recipient,\n    //     uint256 value,\n    //     uint256 callGas,\n    //     uint256 gasPrice,\n    //     uint256 executionWindowStart,\n    //     uint256 executionWindowLength,\n    //     uint256 bounty,\n    //     uint256 fee,\n    //     bytes callData\n    // );\n\n    function logNewTransactionScheduled(\n        address _newTransaction,\n        bytes _serializedBytes,\n        address _scheduledBy\n    )\n        public\n    {\n        // This will log the `msg.sender` as the last indexed address so that TimeNodes can filter by where\n        // the event originated from. Tries to mitigate spam attacks.\n        emit NewTransactionScheduled(_newTransaction, _serializedBytes, _scheduledBy, msg.sender);\n    }\n\n    // function logParameters(\n    //     bytes2 _temporalUnit,\n    //     address _recipient,\n    //     uint256 _value,\n    //     uint256 _callGas,\n    //     uint256 _gasPrice,\n    //     uint256 _executionWindowStart,\n    //     uint256 _executionWindowLength,\n    //     uint256 _bounty,\n    //     uint256 _fee,\n    //     bytes _callData\n    // )\n    //     public\n    // {\n    //     Parameters(_temporalUnit, _recipient, _value, _callGas, _gasPrice, _executionWindowStart, _executionWindowLength, _bounty, _fee, _callData);\n    // }\n}",
+  "sourcePath": "/home/logan/Work/v2/chronos/contracts/EventEmitter.sol",
+  "ast": {
+    "absolutePath": "/home/logan/Work/v2/chronos/contracts/EventEmitter.sol",
+    "exportedSymbols": {
+      "EventEmitter": [
+        3707
+      ]
+    },
+    "id": 3708,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3678,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".19"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:15"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 3707,
+        "linearizedBaseContracts": [
+          3707
+        ],
+        "name": "EventEmitter",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 3688,
+            "name": "NewTransactionScheduled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3687,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3680,
+                  "indexed": false,
+                  "name": "newTransaction",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3688,
+                  "src": "84:22:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3679,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "84:7:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3682,
+                  "indexed": false,
+                  "name": "serializedBytes",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3688,
+                  "src": "108:21:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes memory"
+                  },
+                  "typeName": {
+                    "id": 3681,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "108:5:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes storage pointer"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3684,
+                  "indexed": true,
+                  "name": "scheduledBy",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3688,
+                  "src": "131:27:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3683,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "131:7:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3686,
+                  "indexed": true,
+                  "name": "scheduledFrom",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3688,
+                  "src": "160:29:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3685,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "160:7:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "83:107:15"
+            },
+            "src": "54:137:15"
+          },
+          {
+            "body": {
+              "id": 3705,
+              "nodeType": "Block",
+              "src": "693:284:15",
+              "statements": [
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 3698,
+                        "name": "_newTransaction",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3690,
+                        "src": "910:15:15",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 3699,
+                        "name": "_serializedBytes",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3692,
+                        "src": "927:16:15",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes_memory_ptr",
+                          "typeString": "bytes memory"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 3700,
+                        "name": "_scheduledBy",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3694,
+                        "src": "945:12:15",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "expression": {
+                          "argumentTypes": null,
+                          "id": 3701,
+                          "name": "msg",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 5794,
+                          "src": "959:3:15",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_magic_message",
+                            "typeString": "msg"
+                          }
+                        },
+                        "id": 3702,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "sender",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": null,
+                        "src": "959:10:15",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        {
+                          "typeIdentifier": "t_bytes_memory_ptr",
+                          "typeString": "bytes memory"
+                        },
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 3697,
+                      "name": "NewTransactionScheduled",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 3688,
+                      "src": "886:23:15",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_address_$_t_bytes_memory_ptr_$_t_address_$_t_address_$returns$__$",
+                        "typeString": "function (address,bytes memory,address,address)"
+                      }
+                    },
+                    "id": 3703,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "886:84:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 3704,
+                  "nodeType": "EmitStatement",
+                  "src": "881:89:15"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 3706,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "logNewTransactionScheduled",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3695,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3690,
+                  "name": "_newTransaction",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3706,
+                  "src": "582:23:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3689,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "582:7:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3692,
+                  "name": "_serializedBytes",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3706,
+                  "src": "615:22:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes memory"
+                  },
+                  "typeName": {
+                    "id": 3691,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "615:5:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes storage pointer"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3694,
+                  "name": "_scheduledBy",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3706,
+                  "src": "647:20:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3693,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "647:7:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "572:101:15"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3696,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "693:0:15"
+            },
+            "scope": 3707,
+            "src": "537:440:15",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 3708,
+        "src": "26:1497:15"
+      }
+    ],
+    "src": "0:1523:15"
+  },
+  "legacyAST": {
+    "absolutePath": "/home/logan/Work/v2/chronos/contracts/EventEmitter.sol",
+    "exportedSymbols": {
+      "EventEmitter": [
+        3707
+      ]
+    },
+    "id": 3708,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3678,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".19"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:15"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 3707,
+        "linearizedBaseContracts": [
+          3707
+        ],
+        "name": "EventEmitter",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 3688,
+            "name": "NewTransactionScheduled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3687,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3680,
+                  "indexed": false,
+                  "name": "newTransaction",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3688,
+                  "src": "84:22:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3679,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "84:7:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3682,
+                  "indexed": false,
+                  "name": "serializedBytes",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3688,
+                  "src": "108:21:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes memory"
+                  },
+                  "typeName": {
+                    "id": 3681,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "108:5:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes storage pointer"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3684,
+                  "indexed": true,
+                  "name": "scheduledBy",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3688,
+                  "src": "131:27:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3683,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "131:7:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3686,
+                  "indexed": true,
+                  "name": "scheduledFrom",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3688,
+                  "src": "160:29:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3685,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "160:7:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "83:107:15"
+            },
+            "src": "54:137:15"
+          },
+          {
+            "body": {
+              "id": 3705,
+              "nodeType": "Block",
+              "src": "693:284:15",
+              "statements": [
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 3698,
+                        "name": "_newTransaction",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3690,
+                        "src": "910:15:15",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 3699,
+                        "name": "_serializedBytes",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3692,
+                        "src": "927:16:15",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes_memory_ptr",
+                          "typeString": "bytes memory"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 3700,
+                        "name": "_scheduledBy",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3694,
+                        "src": "945:12:15",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "expression": {
+                          "argumentTypes": null,
+                          "id": 3701,
+                          "name": "msg",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 5794,
+                          "src": "959:3:15",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_magic_message",
+                            "typeString": "msg"
+                          }
+                        },
+                        "id": 3702,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "sender",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": null,
+                        "src": "959:10:15",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        {
+                          "typeIdentifier": "t_bytes_memory_ptr",
+                          "typeString": "bytes memory"
+                        },
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 3697,
+                      "name": "NewTransactionScheduled",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 3688,
+                      "src": "886:23:15",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_address_$_t_bytes_memory_ptr_$_t_address_$_t_address_$returns$__$",
+                        "typeString": "function (address,bytes memory,address,address)"
+                      }
+                    },
+                    "id": 3703,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "886:84:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 3704,
+                  "nodeType": "EmitStatement",
+                  "src": "881:89:15"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 3706,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "logNewTransactionScheduled",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3695,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3690,
+                  "name": "_newTransaction",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3706,
+                  "src": "582:23:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3689,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "582:7:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3692,
+                  "name": "_serializedBytes",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3706,
+                  "src": "615:22:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes memory"
+                  },
+                  "typeName": {
+                    "id": 3691,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "615:5:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes storage pointer"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3694,
+                  "name": "_scheduledBy",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3706,
+                  "src": "647:20:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3693,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "647:7:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "572:101:15"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3696,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "693:0:15"
+            },
+            "scope": 3707,
+            "src": "537:440:15",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 3708,
+        "src": "26:1497:15"
+      }
+    ],
+    "src": "0:1523:15"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.21+commit.dfe3193c.Emscripten.clang"
+  },
+  "networks": {
+    "42": {
+      "events": {},
+      "links": {},
+      "address": "0xbf21760528357ea7ef3f1eaf5513fe5d495f19c4",
+      "transactionHash": "0x5820ca343ba9acde6e0fe2e0da5f824dec14007ffda85a1d6ab35455cbadbcc9"
+    }
+  },
+  "schemaVersion": "2.0.0",
+  "updatedAt": "2018-05-15T13:39:33.306Z"
+}

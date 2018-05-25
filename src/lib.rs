@@ -1,6 +1,7 @@
 // extern crate ethabi;
 extern crate web3;
 
+pub mod event_emitter;
 pub mod timenode;
 
 pub use timenode::Timenode;
