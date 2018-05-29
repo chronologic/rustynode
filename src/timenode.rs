@@ -22,10 +22,7 @@ pub struct Cache {
 }
 
 impl Timenode {
-    pub fn boot() -> Timenode {
-        let (_eloop, transport) = Http::new("http://localhost:8545").unwrap();
-        let web3 = Web3::new(transport);
-
+    pub fn boot(web3: Web3<Http>) -> Timenode {
         Timenode {
             cache: Cache::default(),
             web3: web3,
