@@ -32,7 +32,16 @@ fn main() {
 
     // e_e.get_newTransactionScheduled(7511598);
 
-    e_e.watch_newTransactionScheduled("fe3afc02954c4d989f572f61ee185d654c0c7134".parse().unwrap());
+    e_e.watch_newTransactionScheduled("fe3afc02954c4d989f572f61ee185d654c0c7134".parse().unwrap())
+    .then(|sub| {
+        sub
+            .unwrap()
+            .for_each(|log| {
+                println!("got log {:?}", log);
+                Ok(())
+            })
+    })
+    .wait();
 
     // thread::sleep(time::Duration::from_secs(10_000))
 
