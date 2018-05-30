@@ -14,16 +14,20 @@ use web3::Transport;
 
 #[derive(Debug)]
 pub struct Event_Emitter<T>
-    where T: Transport
+where
+    T: Transport,
 {
     pub instance: Contract<T>,
     pub web3: Web3<T>,
 }
 
-impl Event_Emitter<WebSocket>
-{
-    pub fn at(address: Address, web3: Web3<WebSocket>) -> Event_Emitter<WebSocket> {    
-        let contract = Contract::from_json(web3.eth(), address, include_bytes!("../build/abis/EventEmitter.abi")).unwrap();
+impl Event_Emitter<WebSocket> {
+    pub fn at(address: Address, web3: Web3<WebSocket>) -> Event_Emitter<WebSocket> {
+        let contract = Contract::from_json(
+            web3.eth(),
+            address,
+            include_bytes!("../build/abis/EventEmitter.abi"),
+        ).unwrap();
 
         Event_Emitter {
             instance: contract,
@@ -59,39 +63,40 @@ impl Event_Emitter<WebSocket>
     //                 })
     //         })
     //         .map_err(|_| ());
-        
+
     //     event_future.wait();
     // }
 
-    pub fn watch_newTransactionScheduled(&self, scheduled_from: Address) -> Box<Future<Item = SubscriptionStream<WebSocket, Log> , Error = web3::Error>> {
+    pub fn watch_newTransactionScheduled(
+        &self,
+        scheduled_from: Address,
+    ) -> Box<Future<Item = SubscriptionStream<WebSocket, Log>, Error = web3::Error>> {
         let filter = FilterBuilder::default()
             .address(vec![self.instance.address()])
             .topics(
                 Some(vec![
-                    "94c6f2d01cc82df9dceeabfd7786c57a01cd9796e7cab146d2d0cf5c8380310d".into(),
+                    "94c6f2d01cc82df9dceeabfd7786c57a01cd9796e7cab146d2d0cf5c8380310d"
+                        .into(),
                 ]),
                 None,
-                Some(vec![
-                    scheduled_from.into(),
-                ]),
+                Some(vec![scheduled_from.into()]),
                 None,
             )
             .build();
 
-        let event_future = self.web3.eth_subscribe()
-            .subscribe_logs(filter);
+        let event_future = self.web3.eth_subscribe().subscribe_logs(filter);
 
         event_future.boxed()
-            // .then(|sub| {
-            //     sub
-            //         .unwrap()
-            //         .for_each(|log| {
-            //             println!("got log {:?}", log);
-            //             Ok(())
-            //         })
-            // })
-            // .map_err(|e| println!("{:?}", e));
-    
+        // .then(|sub| {
+        //     sub
+        //         .unwrap()
+        //         .for_each(|log| {
+        //             println!("got log {:?}", log);
+        //             Ok(())
+        //         })
+        // })
+        // .map_err(|e| println!("{:?}", e));
+
         // event_future.wait();
     }
 

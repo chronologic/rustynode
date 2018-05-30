@@ -11,7 +11,8 @@ use web3::types::{Address, U256};
 
 #[derive(Debug)]
 pub struct Timenode<T>
-    where T: Transport
+where
+    T: Transport,
 {
     cache: Cache,
     pub web3: Web3<T>,
@@ -26,8 +27,7 @@ pub struct Cache {
     poll_store: HashMap<String, String>,
 }
 
-impl Timenode<WebSocket>
-{
+impl Timenode<WebSocket> {
     pub fn boot(web3: Web3<WebSocket>) -> Timenode<WebSocket> {
         Timenode {
             cache: Cache::default(),
@@ -37,21 +37,16 @@ impl Timenode<WebSocket>
     pub fn subscribe_to(&self, event_emitter: Address, scheduler_contract: Address) {
         // Create an instance of the Event Emitter (TODO check if the Timenode already
         // has it stored.)
-        let e: Event_Emitter<WebSocket> = Event_Emitter::at(
-            event_emitter,
-            self.web3.clone(),
-        );
+        let e: Event_Emitter<WebSocket> = Event_Emitter::at(event_emitter, self.web3.clone());
 
         e.watch_newTransactionScheduled(scheduler_contract)
-        .then(|sub| {
-            sub
-                .unwrap()
-                .for_each(|log| {
+            .then(|sub| {
+                sub.unwrap().for_each(|log| {
                     println!("got log {:?}", log);
                     Ok(())
                 })
-        })
-        .wait();
+            })
+            .wait();
     }
 
     pub fn works(&self) {
