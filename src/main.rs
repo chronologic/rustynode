@@ -19,29 +19,18 @@ fn main() {
     let (_eloop, transport) = WebSocket::new("ws://localhost:8546").unwrap();
     let web3 = Web3::new(transport);
 
-    // let tn: Timenode<WebSocket> = Timenode::boot(web3.clone());
+    let tn: Timenode<WebSocket> = Timenode::boot(web3.clone());
     // tn.works();
 
     let e_e_address: H160 = "bf21760528357ea7ef3f1eaf5513fe5d495f19c4"
         .parse().unwrap();
-    
-    let e_e: Event_Emitter<WebSocket> = Event_Emitter::at(
-        e_e_address,
-        web3.clone(),
-    );
+
+    let scheduler_address: H160 = "fe3afc02954c4d989f572f61ee185d654c0c7134"
+        .parse().unwrap();
+
+    tn.subscribe_to(e_e_address, scheduler_address);
 
     // e_e.get_newTransactionScheduled(7511598);
-
-    e_e.watch_newTransactionScheduled("fe3afc02954c4d989f572f61ee185d654c0c7134".parse().unwrap())
-    .then(|sub| {
-        sub
-            .unwrap()
-            .for_each(|log| {
-                println!("got log {:?}", log);
-                Ok(())
-            })
-    })
-    .wait();
 
     // thread::sleep(time::Duration::from_secs(10_000))
 

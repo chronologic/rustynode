@@ -1,11 +1,13 @@
 use std::collections::HashMap;
 
+use super::Event_Emitter;
+
 use web3::Web3;
-// use web3::futures::Future;
+use web3::futures::{Future, Stream};
 // use web3::contract::{Contract, Options};
 use web3::transports::WebSocket;
 use web3::Transport;
-// use web3::types::{Address, U256};
+use web3::types::{Address, U256};
 
 #[derive(Debug)]
 pub struct Timenode<T>
@@ -32,9 +34,26 @@ impl Timenode<WebSocket>
             web3: web3,
         }
     }
-    pub fn subscribe_to(scheduler_contract: String, event_emitter: String) {
-        unimplemented!();
+    pub fn subscribe_to(&self, event_emitter: Address, scheduler_contract: Address) {
+        // Create an instance of the Event Emitter (TODO check if the Timenode already
+        // has it stored.)
+        let e: Event_Emitter<WebSocket> = Event_Emitter::at(
+            event_emitter,
+            self.web3.clone(),
+        );
+
+        e.watch_newTransactionScheduled(scheduler_contract)
+        .then(|sub| {
+            sub
+                .unwrap()
+                .for_each(|log| {
+                    println!("got log {:?}", log);
+                    Ok(())
+                })
+        })
+        .wait();
     }
+
     pub fn works(&self) {
         println!("Works!\n{:?}", &self);
     }
