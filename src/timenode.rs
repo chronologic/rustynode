@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 
 use super::Event_Emitter;
+use super::ScheduledTransaction;
 use super::utils;
 
 use web3::Web3;
@@ -45,18 +46,10 @@ impl Timenode<WebSocket> {
         e.watch_newTransactionScheduled(scheduler_contract)
             .then(|sub| {
                 sub.unwrap().for_each(|log| {
-                    // println!(
-                        
-                        utils::decode_raw_data(
-                            &log.data.0[96..]
-                        );
-                    // );
-                        // "got log\n {:?}", 
-                        // utils::split_n_chars(
-                            // &log.data.0[32..].to_hex(),
-                            // 64,
-                        // )
-                    // );
+                    println!(
+                        "{:?}",
+                        ScheduledTransaction::from_raw(&log.data.0),    
+                    );
                     Ok(())
                 })
             })

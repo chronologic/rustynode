@@ -1,37 +1,85 @@
 use super::utils;
 
-use ethabi::{Token, encode, decode};
+use ethabi::token::{Token, Tokenizer, LenientTokenizer};
+use web3::types::{Address, U256, Bytes};
 
-// pub struct ScheduledTransaction {
-//     address: &str,
-//     params: ScheduledTransactionParams,
-// }
+#[derive(Debug)]
+enum Error {}
 
-// pub struct ScheduledTransactionParams {
-//     temporal_unit: &str,
-//     recipient: &str,
-//     value: &str,
-//     call_gas: &str,
-//     gas_price: &str,
-//     execution_window_start: &str,
-//     execution_window_length: &str,
-//     bounty: &str,
-//     feeL &str,
-//     conditional_call_destination: &str,
-//     call_data: &str,
-//     conditional_call_data: &str,
-// }
+#[derive(Debug)]
+pub struct ScheduledTransaction {
+    address: ethabi::Token,
+    params: ScheduledTransactionParams,
+}
 
-// impl ScheduledTransaction {
-//     pub fn from_raw(raw_data: &str) -> ScheduledTransaction {
-//         let parsed: Vec<&str> = utils::split_n_chars(raw_data, 64);
-//         ScheduledTransaction {
-//             address: parsed[0],
-//             ScheduledTransactionParams {
-//                 temporal_unit: parsed[4],
-//                 recipient: parsed[5],
-                
-//             }
-//         }
-//     }
-// }
+#[derive(Debug)]
+pub struct ScheduledTransactionParams {
+    temporal_unit: ethabi::Token,
+    recipient: ethabi::Token,
+    value: ethabi::Token,
+    call_gas: ethabi::Token,
+    gas_price: ethabi::Token,
+    execution_window_start: ethabi::Token,
+    execution_window_length: ethabi::Token,
+    bounty: ethabi::Token,
+    fee: ethabi::Token,
+    conditional_call_destination: ethabi::Token,
+    call_data: ethabi::Token,
+    conditional_call_data: ethabi::Token,
+}
+
+impl ScheduledTransaction {
+    pub fn from_raw(raw_data: &[u8]) -> ScheduledTransaction {
+
+        let addr = ethabi::decode(
+            &[ethabi::ParamType::Address],
+            &raw_data[..32],
+        ).unwrap()[0].clone();
+
+        let decoded = ScheduledTransaction::decode_raw_data(&raw_data[96..]).unwrap();
+
+        ScheduledTransaction {
+            address: addr,
+            params: ScheduledTransactionParams {
+                temporal_unit: decoded[0].clone(),
+                recipient: decoded[1].clone(),
+                value: decoded[2].clone(),
+                call_gas: decoded[3].clone(),
+                gas_price: decoded[4].clone(),
+                execution_window_start: decoded[5].clone(),
+                execution_window_length: decoded[6].clone(),
+                bounty: decoded[7].clone(),
+                fee: decoded[8].clone(),
+                conditional_call_destination: decoded[9].clone(),
+                call_data: decoded[10].clone(),
+                conditional_call_data: decoded[11].clone(),
+            }
+        }
+    }
+
+    fn decode_raw_data(b: &[u8]) -> Result<Vec<ethabi::Token>, ethabi::Error> {
+
+    let param_types: Vec<ethabi::ParamType> = vec![
+        ethabi::ParamType::Uint(256),
+        ethabi::ParamType::Address,
+        ethabi::ParamType::Uint(256),
+        ethabi::ParamType::Uint(256),
+        ethabi::ParamType::Uint(256),
+        ethabi::ParamType::Uint(256),
+        ethabi::ParamType::Uint(256),
+        ethabi::ParamType::Uint(256),
+        ethabi::ParamType::Uint(256),
+        ethabi::ParamType::Address,
+        ethabi::ParamType::Bytes,
+        ethabi::ParamType::Bytes,
+    ];
+
+    let decoded = ethabi::decode(
+        &param_types,
+        b,
+    );
+
+    decoded
+
+    }
+}
