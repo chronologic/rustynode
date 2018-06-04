@@ -45,13 +45,18 @@ impl Timenode<WebSocket> {
         e.watch_newTransactionScheduled(scheduler_contract)
             .then(|sub| {
                 sub.unwrap().for_each(|log| {
-                    println!(
-                        "got log\n {:?}", 
-                        utils::split_n_chars(
-                            &log.data.0.to_hex(),
-                            64,
-                        )
-                    );
+                    // println!(
+                        
+                        utils::decode_raw_data(
+                            &log.data.0[96..]
+                        );
+                    // );
+                        // "got log\n {:?}", 
+                        // utils::split_n_chars(
+                            // &log.data.0[32..].to_hex(),
+                            // 64,
+                        // )
+                    // );
                     Ok(())
                 })
             })
