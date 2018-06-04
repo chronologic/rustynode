@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 
 use super::Event_Emitter;
+use super::utils;
 
 use web3::Web3;
 use web3::futures::{Future, Stream};
@@ -44,7 +45,13 @@ impl Timenode<WebSocket> {
         e.watch_newTransactionScheduled(scheduler_contract)
             .then(|sub| {
                 sub.unwrap().for_each(|log| {
-                    println!("got log {:?}", log.data.0.to_hex());
+                    println!(
+                        "got log\n {:?}", 
+                        utils::split_n_chars(
+                            &log.data.0.to_hex(),
+                            64,
+                        )
+                    );
                     Ok(())
                 })
             })
@@ -54,16 +61,4 @@ impl Timenode<WebSocket> {
     pub fn works(&self) {
         println!("Works!\n{:?}", &self);
     }
-}
-
-pub fn split_n_chars(s: &str, n: usize) -> Vec<&str> {
-    let mut result = vec![];
-
-    let mut i = 0;
-    while i < s.len() {
-        result.push(&s[i..i+n]);
-        i += n;
-    }
-
-    result
 }

@@ -87,17 +87,6 @@ impl Event_Emitter<WebSocket> {
         let event_future = self.web3.eth_subscribe().subscribe_logs(filter);
 
         event_future.boxed()
-        // .then(|sub| {
-        //     sub
-        //         .unwrap()
-        //         .for_each(|log| {
-        //             println!("got log {:?}", log);
-        //             Ok(())
-        //         })
-        // })
-        // .map_err(|e| println!("{:?}", e));
-
-        // event_future.wait();
     }
 
     pub fn works(&self) {

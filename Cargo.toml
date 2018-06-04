@@ -4,6 +4,6 @@ version = "0.1.0"
 authors = ["Logan Saether <Lsaether@protonmail.com>"]
 
 [dependencies]
-# ethabi = "*"
+ethabi = "*"
 rustc-hex = "*"
 web3 = "0.3.0"
