@@ -1,6 +1,6 @@
 #![feature(extern_prelude)]
 
-// extern crate ethabi;
+extern crate rustc_hex;
 extern crate web3;
 
 pub mod event_emitter;

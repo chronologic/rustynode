@@ -9,6 +9,8 @@ use web3::transports::WebSocket;
 use web3::Transport;
 use web3::types::{Address, U256};
 
+use rustc_hex::ToHex;
+
 #[derive(Debug)]
 pub struct Timenode<T>
 where
@@ -42,7 +44,7 @@ impl Timenode<WebSocket> {
         e.watch_newTransactionScheduled(scheduler_contract)
             .then(|sub| {
                 sub.unwrap().for_each(|log| {
-                    println!("got log {:?}", log);
+                    println!("got log {:?}", log.data.0.to_hex());
                     Ok(())
                 })
             })
@@ -52,4 +54,16 @@ impl Timenode<WebSocket> {
     pub fn works(&self) {
         println!("Works!\n{:?}", &self);
     }
+}
+
+pub fn split_n_chars(s: &str, n: usize) -> Vec<&str> {
+    let mut result = vec![];
+
+    let mut i = 0;
+    while i < s.len() {
+        result.push(&s[i..i+n]);
+        i += n;
+    }
+
+    result
 }
