@@ -50,7 +50,7 @@ impl Timenode<WebSocket> {
         e.watch_newTransactionScheduled(scheduler_contract)
             .then(|sub| {
                 sub.unwrap().for_each(|log| {
-                    let scheduled_tx = ScheduledTransaction::from_raw(&log.data.0);  
+                    let scheduled_tx = ScheduledTransaction::from_raw(&log.data.0);
                     self.cache.store.insert('1'.to_string(), scheduled_tx);
                     Ok(())
                 })

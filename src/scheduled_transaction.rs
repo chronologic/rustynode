@@ -31,10 +31,8 @@ pub struct ScheduledTransactionParams {
 impl ScheduledTransaction {
     pub fn from_raw(raw_data: &[u8]) -> ScheduledTransaction {
 
-        let addr = ethabi::decode(
-            &[ethabi::ParamType::Address],
-            &raw_data[..32],
-        ).unwrap()[0].clone();
+        let addr = ethabi::decode(&[ethabi::ParamType::Address], &raw_data[..32]).unwrap()[0]
+            .clone();
 
         let decoded = ScheduledTransaction::decode_raw_data(&raw_data[96..]).unwrap();
 
@@ -53,33 +51,29 @@ impl ScheduledTransaction {
                 conditional_call_destination: decoded[9].clone(),
                 call_data: decoded[10].clone(),
                 conditional_call_data: decoded[11].clone(),
-            }
+            },
         }
     }
 
     fn decode_raw_data(b: &[u8]) -> Result<Vec<ethabi::Token>, ethabi::Error> {
+        let param_types: Vec<ethabi::ParamType> = vec![
+            ethabi::ParamType::Uint(256),
+            ethabi::ParamType::Address,
+            ethabi::ParamType::Uint(256),
+            ethabi::ParamType::Uint(256),
+            ethabi::ParamType::Uint(256),
+            ethabi::ParamType::Uint(256),
+            ethabi::ParamType::Uint(256),
+            ethabi::ParamType::Uint(256),
+            ethabi::ParamType::Uint(256),
+            ethabi::ParamType::Address,
+            ethabi::ParamType::Bytes,
+            ethabi::ParamType::Bytes,
+        ];
 
-    let param_types: Vec<ethabi::ParamType> = vec![
-        ethabi::ParamType::Uint(256),
-        ethabi::ParamType::Address,
-        ethabi::ParamType::Uint(256),
-        ethabi::ParamType::Uint(256),
-        ethabi::ParamType::Uint(256),
-        ethabi::ParamType::Uint(256),
-        ethabi::ParamType::Uint(256),
-        ethabi::ParamType::Uint(256),
-        ethabi::ParamType::Uint(256),
-        ethabi::ParamType::Address,
-        ethabi::ParamType::Bytes,
-        ethabi::ParamType::Bytes,
-    ];
+        let decoded = ethabi::decode(&param_types, b);
 
-    let decoded = ethabi::decode(
-        &param_types,
-        b,
-    );
-
-    decoded
+        decoded
 
     }
 }
