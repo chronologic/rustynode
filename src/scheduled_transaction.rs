@@ -3,8 +3,8 @@ use super::utils;
 use ethabi::token::{Token, Tokenizer, LenientTokenizer};
 use web3::types::{Address, U256, Bytes};
 
-#[derive(Debug)]
-enum Error {}
+// #[derive(Debug)]
+// enum Error {}
 
 #[derive(Debug)]
 pub struct ScheduledTransaction {

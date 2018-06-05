@@ -19,6 +19,7 @@ where
     T: Transport,
 {
     cache: Cache,
+    // id: u32,
     pub web3: Web3<T>,
     //
 }
@@ -26,19 +27,22 @@ where
 #[derive(Debug, Default)]
 pub struct Cache {
     // store - The addresses of the scheduled transactions that the timenode is watching
-    store: HashMap<String, String>,
+    store: HashMap<String, ScheduledTransaction>,
     // polling - The address of the condtional transactions the timenode is polling
-    poll_store: HashMap<String, String>,
+    poll_store: HashMap<String, ScheduledTransaction>,
 }
 
 impl Timenode<WebSocket> {
     pub fn boot(web3: Web3<WebSocket>) -> Timenode<WebSocket> {
         Timenode {
-            cache: Cache::default(),
+            cache: Cache {
+                store: HashMap::new(),
+                poll_store: HashMap::new(),
+            },
             web3: web3,
         }
     }
-    pub fn subscribe_to(&self, event_emitter: Address, scheduler_contract: Address) {
+    pub fn subscribe_to(&mut self, event_emitter: Address, scheduler_contract: Address) {
         // Create an instance of the Event Emitter (TODO check if the Timenode already
         // has it stored.)
         let e: Event_Emitter<WebSocket> = Event_Emitter::at(event_emitter, self.web3.clone());
@@ -46,10 +50,8 @@ impl Timenode<WebSocket> {
         e.watch_newTransactionScheduled(scheduler_contract)
             .then(|sub| {
                 sub.unwrap().for_each(|log| {
-                    println!(
-                        "{:?}",
-                        ScheduledTransaction::from_raw(&log.data.0),    
-                    );
+                    let scheduled_tx = ScheduledTransaction::from_raw(&log.data.0);  
+                    self.cache.store.insert('1'.to_string(), scheduled_tx);
                     Ok(())
                 })
             })

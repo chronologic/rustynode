@@ -21,7 +21,7 @@ fn main() {
     let (_eloop, transport) = WebSocket::new("ws://localhost:8546").unwrap();
     let web3 = Web3::new(transport);
 
-    let tn: Timenode<WebSocket> = Timenode::boot(web3.clone());
+    let mut tn: Timenode<WebSocket> = Timenode::boot(web3.clone());
 
     let e_e_address: H160 = "bf21760528357ea7ef3f1eaf5513fe5d495f19c4".parse().unwrap();
 
